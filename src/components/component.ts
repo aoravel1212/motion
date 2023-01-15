@@ -2,6 +2,7 @@ export interface Component {
   attachTo(parent: HTMLElement, position?: InsertPosition): void;
 }
 
+// html 요소를 만드는 것을 캡슐화 하는 클래스
 export class BaseComponent<T extends HTMLElement> implements Component {
   protected readonly element: T;
   constructor(htmlString: string) {
