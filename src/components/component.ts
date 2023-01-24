@@ -1,5 +1,6 @@
 export interface Component {
   attachTo(parent: HTMLElement, position?: InsertPosition): void;
+  removeFrom(parent: HTMLElement): void;
 }
 
 // html 요소를 만드는 것을 캡슐화 하는 클래스
@@ -10,7 +11,15 @@ export class BaseComponent<T extends HTMLElement> implements Component {
     template.innerHTML = htmlString;
     this.element = template.content.firstElementChild! as T;
   }
+
   attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
     parent.insertAdjacentElement(position, this.element);
+  }
+
+  removeFrom(parent: HTMLElement) {
+    if (parent !== this.element.parentElement) {
+      throw new Error("Parent mismatch!");
+    }
+    parent.removeChild(this.element);
   }
 }
